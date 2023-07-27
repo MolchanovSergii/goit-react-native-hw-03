@@ -1,25 +1,53 @@
+import { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  Keyboard,
+  Alert,
 } from "react-native";
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
+
+  const onLogin = () => {
+    Alert.alert("Credentials", `${email} + ${password}`);
+  };
+
   return (
-    <View style={style.container}>
-      <Text style={style.title}>Увійти</Text>
-      <TextInput style={style.input} placeholder="Логін"></TextInput>
-      <TextInput
-        style={style.input}
-        placeholder="Адреса електронної пошти"
-      ></TextInput>
-      <TouchableOpacity style={style.button}>
-        <Text style={style.buttonText}>Увійти</Text>
-      </TouchableOpacity>
-      <Text style={style.titleQuestion}>Немає акаунту? Зареєструватися</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
+        <View style={style.container}>
+          <Text style={style.title}>Увійти</Text>
+          <TextInput
+            style={style.input}
+            placeholder="Логін"
+            value={login}
+            onChangeText={setLogin}
+          ></TextInput>
+          <TextInput
+            style={style.input}
+            placeholder="Адреса електронної пошти"
+            value={email}
+            onChangeText={setEmail}
+          ></TextInput>
+          <TouchableOpacity style={style.button} onPress={onLogin}>
+            <Text style={style.buttonText}>Увійти</Text>
+          </TouchableOpacity>
+          <Text style={style.titleQuestion}>
+            Немає акаунту? Зареєструватися
+          </Text>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -31,7 +59,7 @@ const style = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 32,
-    paddingBottom: 120,
+    paddingBottom: 30,
     backgroundColor: "rgba(255, 255, 255, 1)",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -67,8 +95,8 @@ const style = StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 32,
     paddingRight: 32,
-    marginTop: 27,
-    marginBottom: 16,
+    marginTop: 20,
+    marginBottom: 10,
     backgroundColor: "#FF6C00",
     borderRadius: 100,
   },

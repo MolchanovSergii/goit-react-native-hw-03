@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -5,32 +6,63 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  Keyboard,
+  Alert,
 } from "react-native";
 
 const RegistrationScreen = () => {
-  return (
-    <View style={style.container}>
-      <Image
-        source={require("../assets/add_photo.png")}
-        style={style.logoUser}
-      />
-      <Image
-        style={style.addUser}
-        source={require("../assets/add.png")}
-      ></Image>
+  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
-      <Text style={style.title}>Реєстрація</Text>
-      <TextInput style={style.input} placeholder="Логін"></TextInput>
-      <TextInput
-        style={style.input}
-        placeholder="Адреса електронної пошти"
-      ></TextInput>
-      <TextInput style={style.input} placeholder="Пароль"></TextInput>
-      <TouchableOpacity style={style.button}>
-        <Text style={style.buttonText}>Зареєстуватися</Text>
-      </TouchableOpacity>
-      <Text style={style.titleQuestion}>Вже є акаунт? Увійти</Text>
-    </View>
+  const onLogin = () => {
+    Alert.alert("Credentials", `${email} + ${login}+ ${password}`);
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
+        <View style={style.container}>
+          <Image
+            source={require("../assets/add_photo.png")}
+            style={style.logoUser}
+          />
+          <Image
+            style={style.addUser}
+            source={require("../assets/add.png")}
+          ></Image>
+
+          <Text style={style.title}>Реєстрація</Text>
+          <TextInput
+            style={style.input}
+            placeholder="Логін"
+            value={login}
+            onChangeText={setLogin}
+          ></TextInput>
+          <TextInput
+            style={style.input}
+            placeholder="Адреса електронної пошти"
+            value={email}
+            onChangeText={setEmail}
+          ></TextInput>
+          <TextInput
+            style={style.input}
+            placeholder="Пароль"
+            value={password}
+            onChangeText={setPassword}
+          ></TextInput>
+          <TouchableOpacity style={style.button} onPress={onLogin}>
+            <Text style={style.buttonText}>Зареєстуватися</Text>
+          </TouchableOpacity>
+          <Text style={style.titleQuestion}>Вже є акаунт? Увійти</Text>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -40,9 +72,9 @@ const style = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 90,
-    paddingBottom: 120,
-    paddingBottom: 20,
+    paddingTop: 80,
+    // paddingBottom: 10,
+    // paddingBottom: 20,
 
     backgroundColor: "rgba(255, 255, 255, 1)",
     borderTopLeftRadius: 25,
@@ -55,7 +87,7 @@ const style = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 35.16,
     textAlign: "center",
-    marginBottom: 33,
+    marginBottom: 15,
   },
   titleQuestion: {
     color: "#1B4371",
@@ -82,7 +114,7 @@ const style = StyleSheet.create({
     borderColor: "#E8E8E8",
     width: "100%",
     height: 50,
-    marginBottom: 16,
+    marginBottom: 12,
     backgroundColor: "#F6F6F6",
     borderStyle: "solid",
     borderRadius: 10,
@@ -95,7 +127,7 @@ const style = StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 32,
     paddingRight: 32,
-    marginTop: 27,
+    marginTop: 20,
     marginBottom: 16,
     backgroundColor: "#FF6C00",
     borderRadius: 100,
